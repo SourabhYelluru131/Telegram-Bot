@@ -4,12 +4,13 @@ from functools import wraps
 import asyncio
 import logging
 import safetoken
+from birthday import birthdaylist
 key = safetoken.apikey
 updater = Updater(token=key, use_context=True)
 dp = updater.dispatcher
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
 from datetime import datetime, timedelta, date,time
-birthdays = {"14-09": {"username": "SourabhYelluru"}}
+birthdays = birthdaylist
 wish = 0
 
 
@@ -45,7 +46,7 @@ def wish_people(update, context):
     today = date.today().strftime("%d-%m")
     if wish == 0:
         if today in birthdays:
-            context.bot.send_message(chat_id=update.message.chat_id, text="Happy Birthday @{} !!! ".format(birthdays[today]["username"]))
+            context.bot.send_message(chat_id=update.message.chat_id, text="Happy Birthday {} !!! ".format(birthdays[today]["username"]))
             wish = 1
     else:
         wish_loop = asyncio.new_event_loop()
